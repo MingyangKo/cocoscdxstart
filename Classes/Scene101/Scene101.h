@@ -13,10 +13,16 @@ private:
 	cocos2d::Rect    rectReplay;
 	cocos2d::Rect    rectReturn;
 
+	float _pt;
+	float _fa;
+	bool _btouch;
+	cocos2d::Sprite *_bean;
+
 	int  _sceneno;
 	char _cSceneNo[10];
 
 public:
+	Scene101();
     static cocos2d::Scene* createScene();
 
     virtual bool init();

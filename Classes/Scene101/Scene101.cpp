@@ -19,6 +19,8 @@ Scene* Scene101::createScene()
 	return scene;
 }
 
+
+
 // on "init" you need to initialize your instance
 bool Scene101::init()
 {
@@ -38,8 +40,11 @@ bool Scene101::init()
 	bkimage->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y)); // 位置通常放置在螢幕正中間
 	this->addChild(bkimage, 0);
 
-	// 自行增加 sprite 將 bean01.png 到螢幕正中間
 
+	// 自行增加 sprite 將 bean01.png 到螢幕正中間
+	//Sprite *_bean = Sprite::create("scene101/bean1_01.png");  // 使用 create 函式,給予檔名即可
+	_bean->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y)); // 位置通常放置在螢幕正中間
+	this->addChild(_bean, 0);
 
 	// create and initialize a label, add a label shows "Scene 101"
 	auto label = Label::createWithTTF("Scene 101", "fonts/Marker Felt.ttf", 32);
@@ -110,9 +115,25 @@ bool Scene101::init()
 	return true;
 }
 
+Scene101::Scene101() {
+	_pt = 0;
+	_fa = 0;
+	_btouch = false;
+	_bean = Sprite::create("scene101/bean1_01.png");
+}
+
 void Scene101::doStep(float dt)  // OnFrameMove
 {
-
+	if (_btouch) {
+		_pt += dt;
+		_fa = 180 * _pt;
+		_bean->setRotation (_fa);
+		if (_fa >= 360) {
+			_pt = 0;
+			_fa = 0;
+			_btouch = false;
+		}
+	}
 }
 
 bool  Scene101::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//觸碰開始事件
@@ -128,7 +149,7 @@ bool  Scene101::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//�
 		unscheduleAllCallbacks();
 		Director::getInstance()->end();
 	}
-
+	if (!_btouch)_btouch = true;
 	return true;
 }
 
