@@ -17,6 +17,7 @@ private:
 	float _fa;
 	bool _btouch;
 	cocos2d::Sprite *_bean;
+	cocos2d::Point touch;
 
 	int  _sceneno;
 	char _cSceneNo[10];

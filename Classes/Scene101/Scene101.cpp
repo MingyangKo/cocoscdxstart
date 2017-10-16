@@ -124,7 +124,7 @@ Scene101::Scene101() {
 
 void Scene101::doStep(float dt)  // OnFrameMove
 {
-	if (_btouch) {
+	/*if (_btouch) {
 		_pt += dt;
 		_fa = 180 * _pt;
 		_bean->setRotation (_fa);
@@ -133,19 +133,24 @@ void Scene101::doStep(float dt)  // OnFrameMove
 			_fa = 0;
 			_btouch = false;
 		}
+	}*/
+
+
+	if (_btouch) {
+		_bean->setPosition(touch);
 	}
 }
 
 bool  Scene101::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//觸碰開始事件
 {
-	Point touchLoc = pTouch->getLocation();
-	if (rectCuber.containsPoint(touchLoc)) {
+	touch = pTouch->getLocation();
+	if (rectCuber.containsPoint(touch)) {
 
 	}
-	if (rectReplay.containsPoint(touchLoc)) {
+	if (rectReplay.containsPoint(touch)) {
 
 	}
-	if (rectReturn.containsPoint(touchLoc)) {
+	if (rectReturn.containsPoint(touch)) {
 		unscheduleAllCallbacks();
 		Director::getInstance()->end();
 	}
@@ -155,13 +160,14 @@ bool  Scene101::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//�
 
 void  Scene101::onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //觸碰移動事件
 {
+	touch = pTouch->getLocation();
 
 
 }
 
 void  Scene101::onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //觸碰結束事件 
 {
-
+	if (_btouch)_btouch = false;
 
 
 }
